@@ -1,9 +1,12 @@
 package com.codecool.spingboot_tasks.request_counter.service;
 
+import com.codecool.spingboot_tasks.request_counter.controller.RequestCounterController;
 import com.codecool.spingboot_tasks.request_counter.model.Statistics;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +24,23 @@ public class RequestCountStatsService {
      */
     private final Map<String, Integer> stats = new HashMap<>();
 
+
     public void increaseCounter(String method) throws Exception {
-        throw new RuntimeException("Not implemented");
+        if (stats.get(method) == null) {
+            stats.put(method, 1);
+        } else {
+            int counter = stats.get(method);
+            counter++;
+            stats.replace(method, counter);
+        }
+
     }
 
     public List<Statistics> getStatistics() {
-        throw new RuntimeException("Not implemented");
+        List<Statistics> result = new LinkedList<>();
+        for(String key: stats.keySet()){
+            result.add(new  Statistics(key,stats.get(key)));
+        }
+        return result;
     }
 }
