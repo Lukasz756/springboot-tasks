@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 public class ProductController {
-
+    private final Logger log = LoggerFactory.getLogger(ProductController.class);
     private final ProductService productService;
 
     public ProductController(ProductService productService) {
@@ -22,11 +22,13 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<Product> getProducts(){
+        log.info("GET all.");
         return null;
     }
 
     @GetMapping("/products/{id}")
     public List<Product> getProducts(@PathVariable long id){
+        log.info("GET by id.");
         return productService.getProduct(id);
     }
 }
